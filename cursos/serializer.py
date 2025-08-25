@@ -5,10 +5,11 @@ class AvaliacaoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Avaliação
         fields = [
+            'curso',
             'nome',
             'email',
             'comentario',
-            'nota_avaliação',
+            'nota_avaliacao',
             'created_at'
         ]
         extra_kwargs = {
@@ -27,8 +28,12 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
+            'id',
             'title',
             'url',
             'avaliacoes',
             'created_at'
         ]
+        extra_kwargs = {
+            'id': {'read_only': True}
+        }
