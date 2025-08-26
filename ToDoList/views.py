@@ -12,12 +12,16 @@ class TasksAPIView(APIView):
         tasks = TaskModel.objects.all()
 
         done = request.query_params.get('done')
-
         if done is not None:
             if done.lower() == 'true':
                 tasks = tasks.filter(done=True)
             elif done.lower() == 'false':
                 tasks = tasks.filter(done=False)
+
+        search = request.query_params.get('search')
+        if search:
+            tasks = tasks.filter(title__icontains=search)
+
 
 
         serializer = TaskSerializer(tasks, many=True)
