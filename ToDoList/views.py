@@ -6,7 +6,6 @@ from ToDoList.serializer import TaskSerializer
 from django.shortcuts import get_object_or_404
 
 
-
 class TasksAPIView(APIView):
     def get(self, request):
         tasks = TaskModel.objects.all()

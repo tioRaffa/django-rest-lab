@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     
     'cursos',
     'ToDoList',
+    
+    'contatos',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
