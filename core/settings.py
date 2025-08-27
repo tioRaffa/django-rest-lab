@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     
     'contatos',
     'phonenumber_field',
+
+    'book',
 ]
 
 MIDDLEWARE = [
