@@ -3,7 +3,7 @@ from decouple import config
 from pprint import pprint
 
 
-def convert_currency(coin1, coin2, quantity):
+def convert_currency(coin1: str, coin2: str, quantity: float) -> dict | None:
     api_key = config('CURRENCY_KEY')
     if not api_key:
         print('Chave API não encontrada no arquivo .env!')
@@ -20,6 +20,7 @@ def convert_currency(coin1, coin2, quantity):
             conversion['moeda_base'] = data.get('base_code')
             conversion['moeda_cotada'] = data.get('target_code')
             conversion['taxa_de_cambio'] = data.get('conversion_rate')
+            conversion['valor']= quantity
             conversion['valor convertido'] = data.get('conversion_result')
             conversion['ultima_atualização_da_taxa'] = data.get('time_last_update_utc')
             return conversion
