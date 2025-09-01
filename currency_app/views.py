@@ -10,7 +10,7 @@ class CurrencyConvertAPIView(APIView):
         to_currency = request.query_params.get('to')
         amount = request.query_params.get('amount')
 
-        if not all([from_currency, to_currency]):
+        if not all([from_currency, to_currency, amount]):
             return Response(
                 {'error': 'Informe os parametros: FROM e TO'},
                 status=status.HTTP_400_BAD_REQUEST
