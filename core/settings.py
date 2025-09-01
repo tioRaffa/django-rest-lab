@@ -40,15 +40,17 @@ INSTALLED_APPS = [
 
     'django_filters',
     'rest_framework',
-    
+
     'cursos',
     'ToDoList',
-    
     'contatos',
     'phonenumber_field',
-
     'book',
+
+    #CLIMA-API
     'weather_app',
+    # CONVERSOS DE MOEDA
+    'currency_app',
 ]
 
 MIDDLEWARE = [
