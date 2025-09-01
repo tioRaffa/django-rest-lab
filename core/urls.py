@@ -9,5 +9,5 @@ urlpatterns = [
     path('api/v1/', include('ToDoList.urls')),
     path('api/v1/', include('contatos.urls')),
     path('api/v1/', include('book.urls')),
-    path('api/v1/', include('weather.urls')),
+    path('api/v1/', include('weather_app.urls')),
 ]

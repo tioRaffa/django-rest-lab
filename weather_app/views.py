@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from weather.api.open_weather import city_weather
+from weather_app.api.open_weather import city_weather
 
 
 class WeatherOnCityAPIView(APIView):

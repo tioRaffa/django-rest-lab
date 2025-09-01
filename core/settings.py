@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
     'book',
-    'weather',
+    'weather_app',
 ]
 
 MIDDLEWARE = [
