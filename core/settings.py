@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'weather_app',
     # CONVERSOS DE MOEDA
     'currency_app',
+    #The Movie DataBase API
+    'movie_app',
 ]
 
 MIDDLEWARE = [
