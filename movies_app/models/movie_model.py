@@ -20,7 +20,7 @@ class Gender(BaseModel):
 
 class MoviesModels(BaseModel):
     title = models.CharField('Titulo', max_length=150)
-    directors = models.ManyToManyField(DirectorModel, on_delete=models.SET_NULL, related_name='filmes_dirigidos')
+    directors = models.ManyToManyField(DirectorModel, related_name='filmes_dirigidos')
     overview = models.TextField('Sinopse')
     genres = models.ManyToManyField(Gender, related_name='filmes')
     release_date = models.DateField('Data de Lançamento')
@@ -38,3 +38,10 @@ class MoviesModels(BaseModel):
     cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados')
     production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos')
     imdb_id = models.CharField('Id imdb', max_length=50)
+
+    class Meta:
+        verbose_name = 'Filme'
+        verbose_name_plural = 'Filmes'
+
+    def __str__(self):
+        return self.title

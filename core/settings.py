@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     # CONVERSOS DE MOEDA
     'currency_app',
     #The Movie DataBase API
-    'movie_app',
+    'movies_app',
 ]
 
 MIDDLEWARE = [
