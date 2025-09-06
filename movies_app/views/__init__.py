@@ -1,0 +1,1 @@
+from .admin_search_view import SearchMovieByNameAdminAPIView

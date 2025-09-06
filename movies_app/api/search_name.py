@@ -45,5 +45,5 @@ def search_movie_by_name(movie_name: str):
     
         
 if __name__ == '__main__':
-    info = search_movie_by_name('batman')
+    info = search_movie_by_name('deadpool')
     pprint(info)
