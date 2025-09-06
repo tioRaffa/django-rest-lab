@@ -1,7 +1,9 @@
+import re
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from movies_app.api.search_name import search_movie_by_name
+from movies_app.api.get_details import get_movie_details_by_id
 
 
 class SearchMovieByNameAdminAPIView(APIView):
@@ -24,3 +26,5 @@ class SearchMovieByNameAdminAPIView(APIView):
                 {"detail": "Nenhum filme encontrado com o título informado."},
                 status=status.HTTP_404_NOT_FOUND
             )
+            
+            

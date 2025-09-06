@@ -42,9 +42,7 @@ def get_movie_details_by_id(id: int) -> dict:
         
     
 
-
-
 if __name__ == '__main__':
-    movie = add_movie_by_id(293660)
+    movie = get_movie_details_by_id(293660)
     pprint(movie)
     
