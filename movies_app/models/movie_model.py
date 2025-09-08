@@ -8,7 +8,7 @@ from .production_companies_model import ProductionCompaniesModel
 
 class Gender(BaseModel):
     name = models.CharField('Genero', max_length=100)
-    imdb_id = models.CharField('IMDB Id', max_length=50)
+    tmdb_id = models.CharField('TMDB Id', max_length=50)
     
     class Meta:
         verbose_name = 'Genero'
@@ -37,7 +37,7 @@ class MoviesModels(BaseModel):
     spoken_languages = models.ManyToManyField(LanguagesModel, related_name='filmes', blank=True, null=True)
     cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados', blank=True, null=True)
     production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos', blank=True, null=True)
-    imdb_id = models.CharField('Id imdb', max_length=50)
+    imdb_id = models.CharField('Id imdb', max_length=50, unique=True)
     # video
 
     class Meta:

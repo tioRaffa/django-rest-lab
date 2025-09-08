@@ -1,8 +1,14 @@
 from rest_framework import serializers
 from movies_app.models.movie_model import MoviesModels
 
+from .author_serializer import AuthorSerializer
+from .director_serializer import DirectorSerializer
+from .genres_serializer import GenderSerializer
 
 class MoviesSerializer(serializers.ModelSerializer):
+    cast = AuthorSerializer(read_only=True, many=True)
+    directors = DirectorSerializer(read_only=True, many=True)
+    genres = GenderSerializer(read_only=True, many=True)
     class Meta:
         model = MoviesModels
         fields = [
@@ -27,8 +33,10 @@ class MoviesSerializer(serializers.ModelSerializer):
             'productions_companies',
             'video',
             'imdb_id',
+            'is_active'
         ]
         extra_kwargs = {
-            'imdb_id': {'write_only': True}
+            'imdb_id': {'write_only': True},
+            'is_active': {'write_only': True}
         }
 

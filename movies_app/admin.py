@@ -45,7 +45,7 @@ class DirectorModelAdmin(admin.ModelAdmin):
 
 @admin.register(Gender)
 class GenderAdmin(admin.ModelAdmin):
-    list_display = ('name', 'imdb_id')
+    list_display = ('name', 'tmdb_id')
     search_fields = ('name',)
     ordering = ('name',)
 
