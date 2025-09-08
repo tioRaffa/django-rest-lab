@@ -1,0 +1,5 @@
+{
+    "editor.suggest.showInlineDetails": false,
+    "discord.removeLowerDetails": true,
+    "discord.detailsEditing": "Editing: {file_name}"
+}

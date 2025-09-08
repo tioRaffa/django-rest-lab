@@ -24,7 +24,8 @@ def get_movie_details_by_id(id: int) -> dict:
         print(f'Erro na validação: {e}')
         return None
 
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&append_to_response=videos,credits,release_dates"
+    # url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}&append_to_response=videos,credits,release_dates"
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}"
         
     try:    
         response = requests.get(url=url)

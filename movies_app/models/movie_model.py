@@ -20,7 +20,7 @@ class Gender(BaseModel):
 
 class MoviesModels(BaseModel):
     title = models.CharField('Titulo', max_length=150)
-    directors = models.ManyToManyField(DirectorModel, related_name='filmes_dirigidos')
+    directors = models.ManyToManyField(DirectorModel, related_name='filmes_dirigidos', blank=True, null=True)
     overview = models.TextField('Sinopse')
     genres = models.ManyToManyField(Gender, related_name='filmes')
     release_date = models.DateField('Data de Lançamento')
@@ -35,9 +35,10 @@ class MoviesModels(BaseModel):
     revenue = models.IntegerField('Receita')  # Receita
     popularity = models.FloatField('Popularidade')
     spoken_lenguages = models.ManyToManyField(LanguagesModel, related_name='filmes')
-    cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados')
+    cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados', blank=True, null=True)
     production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos')
     imdb_id = models.CharField('Id imdb', max_length=50)
+    # video
 
     class Meta:
         verbose_name = 'Filme'
