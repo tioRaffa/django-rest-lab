@@ -22,7 +22,7 @@ class MoviesModels(BaseModel):
     title = models.CharField('Titulo', max_length=150)
     directors = models.ManyToManyField(DirectorModel, related_name='filmes_dirigidos', blank=True, null=True)
     overview = models.TextField('Sinopse')
-    genres = models.ManyToManyField(Gender, related_name='filmes')
+    genres = models.ManyToManyField(Gender, related_name='filmes', blank=True, null=True)
     release_date = models.DateField('Data de Lançamento')
     original_language = models.CharField('Idioma Original', max_length=3)
     runtime = models.IntegerField('Duração em Minutos')
@@ -34,9 +34,9 @@ class MoviesModels(BaseModel):
     budget = models.IntegerField('Orçamento') # Orçamento
     revenue = models.IntegerField('Receita')  # Receita
     popularity = models.FloatField('Popularidade')
-    spoken_lenguages = models.ManyToManyField(LanguagesModel, related_name='filmes')
+    spoken_languages = models.ManyToManyField(LanguagesModel, related_name='filmes', blank=True, null=True)
     cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados', blank=True, null=True)
-    production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos')
+    production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos', blank=True, null=True)
     imdb_id = models.CharField('Id imdb', max_length=50)
     # video
 
