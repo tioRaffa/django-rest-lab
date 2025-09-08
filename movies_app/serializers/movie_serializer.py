@@ -4,11 +4,13 @@ from movies_app.models.movie_model import MoviesModels
 from .author_serializer import AuthorSerializer
 from .director_serializer import DirectorSerializer
 from .genres_serializer import GenderSerializer
+from language_serializer import LanguageSerializer
 
 class MoviesSerializer(serializers.ModelSerializer):
     cast = AuthorSerializer(read_only=True, many=True)
     directors = DirectorSerializer(read_only=True, many=True)
     genres = GenderSerializer(read_only=True, many=True)
+    spoken_languages = LanguageSerializer(read_only=True, many=True)
     class Meta:
         model = MoviesModels
         fields = [

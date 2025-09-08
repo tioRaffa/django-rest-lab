@@ -1,7 +1,7 @@
 from django.db import models
 from .base import BaseModel
 from .director_model import DirectorModel
-from .lenguage_model import LanguagesModel
+from .language_model import LanguagesModel
 from .author_model import AuthorModel
 from .production_companies_model import ProductionCompaniesModel
 # Create your models here.
