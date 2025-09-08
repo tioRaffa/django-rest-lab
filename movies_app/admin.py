@@ -37,10 +37,10 @@ class DirectorModelAdmin(admin.ModelAdmin):
             'fields': ('name', 'profile_path')
         }),
         ('IDs', {
-            'fields': ('tbmdb_id',)
+            'fields': ('tmdb_id',)
         }),
     )
-    readonly_fields = ('tbmdb_id',)
+    readonly_fields = ('tmdb_id',)
 
 
 @admin.register(Gender)
@@ -52,9 +52,9 @@ class GenderAdmin(admin.ModelAdmin):
 
 @admin.register(LanguagesModel)
 class LanguagesModelAdmin(admin.ModelAdmin):
-    list_display = ('lenguage', 'iso_639_1')
-    search_fields = ('lenguage', 'iso_639_1')
-    ordering = ('lenguage',)
+    list_display = ('language', 'iso_639_1')
+    search_fields = ('language', 'iso_639_1')
+    ordering = ('language',)
 
 
 @admin.register(MoviesModels)
@@ -77,10 +77,10 @@ class MoviesModelsAdmin(admin.ModelAdmin):
             'fields': ('directors', 'cast')
         }),
         ('Outros', {
-            'fields': ('genres', 'spoken_lenguages', 'production_companies', 'imdb_id')
+            'fields': ('genres', 'spoken_languages', 'production_companies', 'imdb_id')
         }),
     )
-    filter_horizontal = ('genres', 'spoken_lenguages', 'cast', 'production_companies', 'directors')
+    filter_horizontal = ('genres', 'spoken_languages', 'cast', 'production_companies', 'directors')
 
 
 @admin.register(ProductionCompaniesModel)
