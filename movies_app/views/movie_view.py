@@ -22,8 +22,8 @@ class MoviesAPIView(APIView):
             
         try:
             api_data = get_movie_details_by_id(movie_id)
-            genres = api_data.get('genres')
-            credits = api_data.get('credits')
+            genres = api_data.get('genres', [])
+            credits = api_data.get('credits', [])
             
             directors = [
                 {
@@ -56,16 +56,16 @@ class MoviesAPIView(APIView):
             
             production_companies = [
                 {
-                    'name:': companie.get('name'),
+                    'name': companie.get('name'),
                     'origin_country': companie.get('origin_country'),
                     'logo_path': companie.get('logo_path'),
                     'tmdb_id': companie.get('id')
                     
-                } for companie in api_data.get('production_companies')
+                } for companie in api_data.get('production_companies', [])
             ]
             
             release_dates = api_data.get('release_dates')
-            results = release_dates.get('results')
+            results = release_dates.get('results', [])
             indicative_rating = []
             for country_release in results:
                 if country_release.get('iso_3166_1') == 'BR':
@@ -101,8 +101,13 @@ class MoviesAPIView(APIView):
                 
             }
             
-            return Response(filtered_data)
+            serializer = MoviesSerializer(data=filtered_data)
             
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
             
             
