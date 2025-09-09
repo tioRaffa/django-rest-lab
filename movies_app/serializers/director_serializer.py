@@ -18,7 +18,7 @@ class DirectorSerializer(serializers.ModelSerializer):
             },
             'profile_path': {
                 'required': True,
-                'validators': [not_blank['profile_path']]
+                'validators': [not_blank('profile_path')]
             },
             'tmdb_id': {'write_only': True, 'required': True}
         }
