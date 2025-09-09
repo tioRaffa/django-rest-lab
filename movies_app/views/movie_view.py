@@ -46,6 +46,23 @@ class MoviesAPIView(APIView):
                 } for actor in credits.get('cast', [])[:5]
             ]
                 
+            spoken_languages = [
+                {
+                    'language': data.get('english_name'),
+                    'iso_639_1': data.get('iso_639_1')
+                    
+                } for data in api_data.get('spoken_languages', [])
+            ]
+            
+            production_companies = [
+                {
+                    'name:': companie.get('name'),
+                    'origin_country': companie.get('origin_country'),
+                    'logo_path': companie.get('logo_path'),
+                    'tmdb_id': companie.get('id')
+                    
+                } for companie in api_data.get('production_companies')
+            ]
             
             release_dates = api_data.get('release_dates')
             results = release_dates.get('results')
@@ -59,15 +76,11 @@ class MoviesAPIView(APIView):
                     }
                     indicative_rating.append(data)
                     break
-                    
             
-            # spoken_languages
             
             filtered_data = {
                 'title': api_data.get('title'),
-                'directors':directors,
                 'overview': api_data.get('overview'),
-                'genres': genres,
                 'release_date': api_data.get('release_date'),
                 'original_language': api_data.get('original_language'),
                 'runtime': api_data.get('runtime'),
@@ -79,16 +92,16 @@ class MoviesAPIView(APIView):
                 'budget': api_data.get('budget'),
                 'revenue': api_data.get('revenue'),
                 'popularity': api_data.get('popularity'),
-                # 'spoken_languages': ...,
+                'genres': genres,
+                'spoken_languages': spoken_languages,
+                'directors':directors,
                 'cast': cast,
-                # 'production_companies': ...,
+                'production_companies': production_companies,
                 'imdb_id': api_data.get('imdb_id')
                 
             }
             
-            
-            
-            return Response(results)
+            return Response(filtered_data)
             
             
             
