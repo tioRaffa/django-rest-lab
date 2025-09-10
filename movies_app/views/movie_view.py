@@ -20,10 +20,15 @@ class MoviesAPIView(APIView):
                 'error': 'O ID do filme (tmdb_id) é obrigatiorio'
             }, status=status.HTTP_400_BAD_REQUEST)
             
+        if MoviesModels.objects.filter(tmdb_id=movie_id).exists():
+            return Response({
+                'error': 'Este filme já foi cadastrado no Banco de Dados'
+            }, status=status.HTTP_400_BAD_REQUEST)
+            
         try:
             api_data = get_movie_details_by_id(movie_id)
             genres = api_data.get('genres', [])
-            credits = api_data.get('credits', [])
+            credits = api_data.get('credits', {})
             
             directors = [
                 {
@@ -97,7 +102,7 @@ class MoviesAPIView(APIView):
                 'directors':directors,
                 'cast': cast,
                 'production_companies': production_companies,
-                'imdb_id': api_data.get('imdb_id')
+                'tmdb_id': api_data.get('id')
                 
             }
             
@@ -108,8 +113,7 @@ class MoviesAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
-            
+
             
         except ValueError as e:
             return Response({

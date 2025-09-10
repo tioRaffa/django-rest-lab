@@ -37,7 +37,7 @@ class MoviesModels(BaseModel):
     spoken_languages = models.ManyToManyField(LanguagesModel, related_name='filmes', blank=True)
     cast = models.ManyToManyField(AuthorModel, related_name='filmes_atuados', blank=True)
     production_companies = models.ManyToManyField(ProductionCompaniesModel, related_name='filmes_produzidos', blank=True)
-    imdb_id = models.CharField('Id imdb', max_length=50, unique=True)
+    tmdb_id = models.CharField('Id tmdb', max_length=50, unique=True)
     # video
 
     class Meta:
