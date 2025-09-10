@@ -1,3 +1,4 @@
+import re
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -20,10 +21,10 @@ class MoviesAPIView(APIView):
                 'error': 'O ID do filme (tmdb_id) é obrigatiorio'
             }, status=status.HTTP_400_BAD_REQUEST)
             
-        if MoviesModels.objects.filter(tmdb_id=movie_id).exists():
-            return Response({
-                'error': 'Este filme já foi cadastrado no Banco de Dados'
-            }, status=status.HTTP_400_BAD_REQUEST)
+        # if MoviesModels.objects.filter(tmdb_id=movie_id).exists():
+        #     return Response({
+        #         'error': 'Este filme já foi cadastrado no Banco de Dados'
+        #     }, status=status.HTTP_400_BAD_REQUEST)
             
         try:
             api_data = get_movie_details_by_id(movie_id)
@@ -71,15 +72,11 @@ class MoviesAPIView(APIView):
             
             release_dates = api_data.get('release_dates')
             results = release_dates.get('results', [])
-            indicative_rating = []
+            indicative_rating = ''
             for country_release in results:
                 if country_release.get('iso_3166_1') == 'BR':
                     certification  = country_release.get('release_dates')[0].get('certification')
-                    data = {
-                        'iso_3166_1': 'BR',
-                        'certification': certification
-                    }
-                    indicative_rating.append(data)
+                    indicative_rating += certification
                     break
             
             
@@ -105,14 +102,14 @@ class MoviesAPIView(APIView):
                 'tmdb_id': api_data.get('id')
                 
             }
+            return Response(cast)
+            # serializer = MoviesSerializer(data=filtered_data)
             
-            serializer = MoviesSerializer(data=filtered_data)
+            # if serializer.is_valid():
+            #     serializer.save()
+            #     return Response(serializer.data, status=status.HTTP_201_CREATED)
             
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             
         except ValueError as e:
