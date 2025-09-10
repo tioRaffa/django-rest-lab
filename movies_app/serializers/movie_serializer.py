@@ -12,7 +12,7 @@ from .language_serializer import LanguageSerializer
 from .production_comp_serializer import ProductionCompaniesSerializer
 
 class MoviesSerializer(serializers.ModelSerializer):
-    cast = AuthorSerializer(read_only=True, many=True)
+    cast = AuthorSerializer(many=True)
     authors_ids = serializers.PrimaryKeyRelatedField(
         write_only=True,
         queryset=AuthorModel.objects.all(),
@@ -22,7 +22,7 @@ class MoviesSerializer(serializers.ModelSerializer):
         help_text='Id de atores'
     )
     
-    directors = DirectorSerializer(read_only=True, many=True)
+    directors = DirectorSerializer(many=True)
     directors_ids = serializers.PrimaryKeyRelatedField(
         write_only=True,
         queryset=DirectorModel.objects.all(),
@@ -32,7 +32,7 @@ class MoviesSerializer(serializers.ModelSerializer):
         help_text='Id de diretores'
     )
     
-    genres = GenderSerializer(read_only=True, many=True)
+    genres = GenderSerializer(many=True)
     genres_ids = serializers.PrimaryKeyRelatedField(
         write_only=True,
         queryset=Gender.objects.all(),
@@ -42,7 +42,7 @@ class MoviesSerializer(serializers.ModelSerializer):
         help_text='ID de generos'
     )
     
-    spoken_languages = LanguageSerializer(read_only=True, many=True)
+    spoken_languages = LanguageSerializer(many=True)
     languages_ids = serializers.PrimaryKeyRelatedField(
         write_only=True,
         queryset=LanguagesModel.objects.all(),
@@ -52,7 +52,7 @@ class MoviesSerializer(serializers.ModelSerializer):
         help_text='ID de linguagens'
     )
     
-    production_companies = ProductionCompaniesSerializer(read_only=True, many=True)
+    production_companies = ProductionCompaniesSerializer(many=True)
     companies_ids = serializers.PrimaryKeyRelatedField(
         write_only=True,
         queryset=ProductionCompaniesModel.objects.all(),
@@ -98,11 +98,11 @@ class MoviesSerializer(serializers.ModelSerializer):
         }
         
     def create(self, validated_data):
-        cast_data = validated_data.pop('cast', )
-        directors_data = validated_data.pop('directors',)
-        genres_data = validated_data.pop('genres',)
-        languages_data = validated_data.pop('spoken_languages', )
-        production_companies_data = validated_data.pop('production_companies',[])
+        cast_data = validated_data.pop('cast', [])
+        directors_data = validated_data.pop('directors', [])
+        genres_data = validated_data.pop('genres', [])
+        languages_data = validated_data.pop('spoken_languages', [])
+        production_companies_data = validated_data.pop('production_companies', [])
         
         movie: MoviesModels = MoviesModels.objects.create(**validated_data)
         

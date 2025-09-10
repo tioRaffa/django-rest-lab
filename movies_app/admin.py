@@ -1,99 +1,36 @@
 from django.contrib import admin
-from .models import (
-    AuthorModel,
-    DirectorModel,
-    Gender,
-    LanguagesModel,
-    MoviesModels,
-    ProductionCompaniesModel,
-    VideoModel
-)
+from .models.author_model import AuthorModel
+from .models.director_model import DirectorModel
+from .models.language_model import LanguagesModel
+from .models.movie_model import MoviesModels, Gender
+from .models.production_companies_model import ProductionCompaniesModel
+from .models.video_model import VideoModel
 
-
-@admin.register(AuthorModel)
-class AuthorModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'known_for_department')
-    search_fields = ('name', 'known_for_department')
-    list_filter = ('known_for_department',)
-    ordering = ('name',)
-    fieldsets = (
-        ('Informações Pessoais', {
-            'fields': ('name', 'known_for_department', 'profile_path')
-        }),
-        ('IDs', {
-            'fields': ('tmdb_id',)
-        }),
-    )
-    readonly_fields = ('tmdb_id',)
-
-
-@admin.register(DirectorModel)
-class DirectorModelAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
-    ordering = ('name',)
-    fieldsets = (
-        ('Informações Pessoais', {
-            'fields': ('name', 'profile_path')
-        }),
-        ('IDs', {
-            'fields': ('tmdb_id',)
-        }),
-    )
-    readonly_fields = ('tmdb_id',)
-
+@admin.register(MoviesModels)
+class MoviesAdmin(admin.ModelAdmin):
+    list_display = ('title', 'release_date', 'indicative_rating', 'status', 'vote_average', 'is_active')
+    
 
 @admin.register(Gender)
 class GenderAdmin(admin.ModelAdmin):
     list_display = ('name', 'tmdb_id')
-    search_fields = ('name',)
-    ordering = ('name',)
 
+@admin.register(AuthorModel)
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'known_for_department', 'tmdb_id')
+
+@admin.register(DirectorModel)
+class DirectorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'tmdb_id')
 
 @admin.register(LanguagesModel)
-class LanguagesModelAdmin(admin.ModelAdmin):
+class LanguagesAdmin(admin.ModelAdmin):
     list_display = ('language', 'iso_639_1')
-    search_fields = ('language', 'iso_639_1')
-    ordering = ('language',)
-
-
-@admin.register(MoviesModels)
-class MoviesModelsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'release_date', 'vote_average', 'status')
-    search_fields = ('title', 'directors__name')
-    list_filter = ('release_date', 'status', 'genres')
-    ordering = ('-release_date',)
-    fieldsets = (
-        ('Informações Principais', {
-            'fields': ('title', 'overview', 'poster_path', 'release_date', 'status')
-        }),
-        ('Detalhes', {
-            'fields': ('runtime', 'original_language', 'indicative_rating', 'budget', 'revenue', 'popularity')
-        }),
-        ('Votos', {
-            'fields': ('vote_average', 'vote_count')
-        }),
-        ('Equipe e Elenco', {
-            'fields': ('directors', 'cast')
-        }),
-        ('Outros', {
-            'fields': ('genres', 'spoken_languages', 'production_companies', 'imdb_id')
-        }),
-    )
-    filter_horizontal = ('genres', 'spoken_languages', 'cast', 'production_companies', 'directors')
-
 
 @admin.register(ProductionCompaniesModel)
-class ProductionCompaniesModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'origin_country')
-    search_fields = ('name', 'origin_country')
-    list_filter = ('origin_country',)
-    ordering = ('name',)
-
+class ProductionCompaniesAdmin(admin.ModelAdmin):
+    list_display = ('name', 'origin_country', 'tmdb_id')
 
 @admin.register(VideoModel)
-class VideoModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'site', 'type', 'filme')
-    search_fields = ('name', 'filme__title')
-    list_filter = ('site', 'type')
-    ordering = ('name',)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type', 'site', 'filme')
