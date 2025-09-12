@@ -155,28 +155,31 @@ class MoviesSerializer(serializers.ModelSerializer):
         return movie
 
     def update(self, instance, validated_data):
-        genres_id_data = validated_data.pop('genres_ids', None)
-        validated_data.pop('genres', None)
+        genres_data = validated_data.pop('genres', None)
+        authors_data = validated_data.pop('cast', None)
+        directors_data = validated_data.pop('directors', None)
+        languages_data = validated_data.pop('spoken_languages', None)
+        companies_data = validated_data.pop('production_companies', None)
 
-        authors_ids_data = validated_data.pop('authors_ids', None)
-        directors_ids = validated_data.pop('directors_ids', None)
-        languages_ids = validated_data.pop('languages_ids', None)
-        companies_ids_data = validated_data.pop('companies_ids', None)
-        
         # campos normais
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
+
         try:
             instance.full_clean()
         except ValidationError as e:
             raise serializers.ValidationError(e.message_dict)
-             
-                
-        if genres_id_data is not None:
-            genres_to_add = Gender.objects.filter(id__in=genres_id_data)
-            instance.genres.add(*genres_to_add)
-            
-            
+
+        if genres_data is not None:
+            instance.genres.add(*genres_data)
+        if authors_data is not None:
+            instance.cast.add(*authors_data)
+        if directors_data is not None:
+            instance.directors.add(*directors_data)
+        if languages_data is not None:
+            instance.spoken_languages.add(*languages_data)
+        if companies_data is not None:
+            instance.production_companies.add(*companies_data)
+
         instance.save()
-        instance.refresh_from_db()
         return instance
