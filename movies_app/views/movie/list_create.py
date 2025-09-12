@@ -1,4 +1,3 @@
-import re
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,7 +7,7 @@ from movies_app.api.get_details import get_movie_details_by_id
 
 
 
-class MoviesAPIView(APIView):
+class MovieListCreateView(APIView):
     def get(self, request):
         movies = MoviesModels.objects.filter(is_active=True)
         serializer = MoviesSerializer(movies, many=True)

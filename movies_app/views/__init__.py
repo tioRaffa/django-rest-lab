@@ -1,2 +1,2 @@
-from .admin_search_view import SearchMovieByNameAdminAPIView
-from .movie_view import MoviesAPIView
+from .movie.search_tdmb_api import SearchMovieByNameAdminAPIView
+from .movie.list_create import MovieListCreateView
