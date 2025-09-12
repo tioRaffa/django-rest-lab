@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from rest_framework import serializers
 from movies_app.models.movie_model import MoviesModels, Gender
 from movies_app.models.author_model import AuthorModel
@@ -152,3 +153,30 @@ class MoviesSerializer(serializers.ModelSerializer):
                 movie.production_companies.add(companie)
                 
         return movie
+
+    def update(self, instance, validated_data):
+        genres_id_data = validated_data.pop('genres_ids', None)
+        validated_data.pop('genres', None)
+
+        authors_ids_data = validated_data.pop('authors_ids', None)
+        directors_ids = validated_data.pop('directors_ids', None)
+        languages_ids = validated_data.pop('languages_ids', None)
+        companies_ids_data = validated_data.pop('companies_ids', None)
+        
+        # campos normais
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        try:
+            instance.full_clean()
+        except ValidationError as e:
+            raise serializers.ValidationError(e.message_dict)
+             
+                
+        if genres_id_data is not None:
+            genres_to_add = Gender.objects.filter(id__in=genres_id_data)
+            instance.genres.add(*genres_to_add)
+            
+            
+        instance.save()
+        instance.refresh_from_db()
+        return instance
