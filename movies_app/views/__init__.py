@@ -1,2 +1,3 @@
 from .movie.search_tdmb_api import SearchMovieByNameAdminAPIView
 from .movie.list_create import MovieListCreateView
+from .movie.retrieve_update import MovieRetrieveUpdateView

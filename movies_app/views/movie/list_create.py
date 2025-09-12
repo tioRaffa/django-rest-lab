@@ -10,6 +10,16 @@ from movies_app.api.get_details import get_movie_details_by_id
 class MovieListCreateView(APIView):
     def get(self, request):
         movies = MoviesModels.objects.filter(is_active=True)
+        
+        genre_id = request.query_params.get('genero')
+        if genre_id:
+            movies = movies.filter(genres__id=genre_id)
+            
+        title_ = request.query_params.get('titulo')
+        if title_:
+            movies = movies.filter(title__icontains=title_)
+        
+        
         serializer = MoviesSerializer(movies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
