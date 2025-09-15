@@ -1,7 +1,6 @@
-from tabnanny import verbose
 from .base_model import BaseModel
 from django.db import models
-
+from django.utils.text import slugify
 from .author_models import AuthorModel
 from .category_model import CategoryModel
 
@@ -21,6 +20,8 @@ class BookModel(BaseModel):
     isbn_10 = models.CharField(max_length=10, unique=True, verbose_name='ISBN 10', blank=True, null=True)
     isbn_13 = models.CharField(max_length=13, unique=True, verbose_name='ISBN 13',blank=True, null=True)
     
+    slug = models.SlugField(max_length=150, blank=True, null=True)
+    
     class Meta:
         verbose_name = 'Livro'
         verbose_name_plural = 'Livros'
@@ -30,6 +31,10 @@ class BookModel(BaseModel):
             models.Index(fields=['google_book_id'])
         ]
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
         
     def __str__(self):
         return self.title
