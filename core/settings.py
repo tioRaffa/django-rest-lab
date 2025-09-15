@@ -49,10 +49,12 @@ INSTALLED_APPS = [
 
     #CLIMA-API
     'weather_app',
-    # CONVERSOS DE MOEDA
+    #CONVERSOS DE MOEDA
     'currency_app',
     #The Movie DataBase API
     'movies_app',
+    #Google Books API
+    'google_books_app',
 ]
 
 MIDDLEWARE = [
