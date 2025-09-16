@@ -1,8 +1,6 @@
 import requests
 from pprint import pprint
 from decouple import config
-import requests
-
 
 
 def search_by_title(title):
