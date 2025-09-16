@@ -1,4 +1,5 @@
 from locale import currency
+from os import name
 from pprint import pprint
 from fetch_book import fetch_by_id
 
@@ -7,6 +8,26 @@ def format_book_data(book):
     sale_info_data = book.get('saleInfo')
     volume_info_data = book.get('volumeInfo')
     
+    authors_data = [
+        {
+            "name": name
+        } for name in volume_info_data.get('authors')
+    ]
+    
+    categories_data = [
+        {"name": name.strip(),}
+        for category in volume_info_data.get('categories', [])
+        for name in category.split('/')
+    ]
+    
+    isbn_10 = None
+    isbn_13 = None
+    
+    for item in volume_info_data.get('industryIdentifiers'):
+        if item['type'] == 'ISBN_10':
+            isbn_10 = item['identifier']
+        elif item['type'] == 'ISBN_13':
+            isbn_13 = item['identifier']
     
     volume_info = {
         'title': volume_info_data.get('title'),
@@ -14,12 +35,13 @@ def format_book_data(book):
         'published_date': volume_info_data.get('publishedDate'),
         'description': volume_info_data.get('description'),
         'page_count': volume_info_data.get('pageCount'),
-        # 'authors': ...,
-        # 'categories': ...,
+        'authors': authors_data,
+        'categories': categories_data,
         'thumbnail_url': volume_info_data.get('imageLinks')['extraLarge'],
-        # 'isbn_10': ...,
-        # 'isbn_13': ...,
+        'isbn_10': isbn_10,
+        'isbn_13': isbn_13,
     }
+    
     
     list_price = sale_info_data.get('listPrice', {})
     amount = list_price.get('amount', 0.0)
@@ -37,8 +59,6 @@ def format_book_data(book):
         'volumeInfo': volume_info,
         'saleInfo': sale_info
     }
-    
-    
     return formated_data
 
 
