@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
-from book import serializer
 from google_books_app.models.book_model import BookModel
 from google_books_app.serializer.book_serializer import BookSerializer
 from django.shortcuts import get_object_or_404
@@ -14,9 +13,9 @@ class RetriveUpdateAPIView(APIView):
     
     def get_permissions(self):
         if self.request.method == 'PATCH':
-            return [permissions.IsAdminUser]
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.AllowAny]
+            return [permissions.IsAdminUser()]
+        elif self.request.method in permissions.SAFE_METHODS:
+            return [permissions.AllowAny()]
         
         
     def get(self, request, pk):
