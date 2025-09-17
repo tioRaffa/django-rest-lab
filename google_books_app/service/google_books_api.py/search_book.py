@@ -40,7 +40,10 @@ def search_by_title(title):
         ]
         
         return formated_data
-            
+    
+    except requests.exceptions.HTTPError as e:
+        raise APIException(f'Erro na API: {e}')
+    
     except requests.exceptions.RequestException as e:
         raise APIException(f'Erro na requisição: {e}')
     
