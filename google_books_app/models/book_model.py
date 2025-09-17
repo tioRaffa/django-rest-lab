@@ -15,10 +15,14 @@ class BookModel(BaseModel):
     authors = models.ManyToManyField(AuthorModel, related_name='books', verbose_name='Autores', blank=True)
     categories = models.ManyToManyField(CategoryModel, related_name='books', verbose_name='Categorias', blank=True)
     
-    thumbnail_url = models.URLField(verbose_name='URL da capa', blank=True, null=True)
+    thumbnail_url = models.URLField(verbose_name='URL da capa', max_length=500, blank=True, null=True)
     
     isbn_10 = models.CharField(max_length=10, unique=True, verbose_name='ISBN 10', blank=True, null=True)
     isbn_13 = models.CharField(max_length=13, unique=True, verbose_name='ISBN 13',blank=True, null=True)
+    
+    buy_link = models.URLField(verbose_name='Link de Compra', blank=True, null=True)
+    price = models.DecimalField(verbose_name='Preço', max_digits=10, decimal_places=2, blank=True, null=True)
+    currency = models.CharField(verbose_name='Moeda', max_length=3, blank=True, null=True)
     
     slug = models.SlugField(max_length=150, blank=True, null=True)
     

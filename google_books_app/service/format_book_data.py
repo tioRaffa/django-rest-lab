@@ -27,7 +27,12 @@ def format_book_data(book):
         elif item['type'] == 'ISBN_13':
             isbn_13 = item['identifier']
     
+    list_price = sale_info_data.get('listPrice', {})
+    amount = list_price.get('amount', 0.0)
+    currency_ = list_price.get('currencyCode', 'BRL')
+    
     volume_info = {
+        'google_book_id': book_id,
         'title': volume_info_data.get('title'),
         'publisher': volume_info_data.get('publisher'),
         'published_date': volume_info_data.get('publishedDate'),
@@ -38,26 +43,12 @@ def format_book_data(book):
         'thumbnail_url': volume_info_data.get('imageLinks')['extraLarge'],
         'isbn_10': isbn_10,
         'isbn_13': isbn_13,
-    }
-    
-    
-    list_price = sale_info_data.get('listPrice', {})
-    amount = list_price.get('amount', 0.0)
-    currency_ = list_price.get('currencyCode', 'BRL')
-    
-    sale_info = {
-        'buyLink': sale_info_data.get('buyLink'),
+        'buy_link': sale_info_data.get('buyLink'),
         'price': amount,
-        'currency': currency_,
-    }
+        'currency': currency_
+   }
     
-    
-    formated_data = {
-        'book_id': book_id,
-        'volumeInfo': volume_info,
-        'saleInfo': sale_info
-    }
-    return formated_data
+    return volume_info
 
 
 if __name__ == '__main__':
