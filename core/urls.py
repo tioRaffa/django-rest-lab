@@ -12,5 +12,5 @@ urlpatterns = [
     path('api/v2/', include('weather_app.urls')),
     path('api/v2/', include('currency_app.urls')),
     path('api/v2/', include('movies_app.urls')),
-    # path('api/v2/', include('google_books_app.urls')),
+    path('api/v2/', include('google_books_app.urls')),
 ]
