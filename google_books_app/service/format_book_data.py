@@ -1,7 +1,5 @@
-from locale import currency
-from os import name
 from pprint import pprint
-from fetch_book import fetch_by_id
+from .fetch_book import fetch_by_id
 
 def format_book_data(book):
     book_id = book.get('id')
