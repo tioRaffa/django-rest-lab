@@ -1,4 +1,5 @@
 from os import name
+from django.forms import ValidationError
 from rest_framework import serializers
 from google_books_app.models.book_model import BookModel
 from google_books_app.validators.not_blank import not_blank, validate_isbn, validate_page_count
@@ -90,3 +91,23 @@ class BookSerializer(serializers.ModelSerializer):
         
         return book
     
+    
+    def update(self, instance, validated_data):
+        authors_data = validated_data.pop('authors', None)
+        categories_data = validated_data.pop('categories', None)
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        try:
+            instance.full_clean()
+        except ValueError as e:
+            raise serializers.ValidationError(e)
+        
+        if authors_data is not None:
+            instance.authors.add(*authors_data)
+        if categories_data is not None:
+            instance.categories.add(*categories_data)
+        
+        instance.save()
+        return instance
